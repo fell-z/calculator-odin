@@ -2,16 +2,38 @@
 const numButtons = document.querySelectorAll(".num-button");
 const operatorButtons = document.querySelectorAll(".operator-button");
 const allClearButton = document.querySelector(".all-clear-button");
+const clearEntryButton = document.querySelector(".clear-entry-button");
+const decimalButton = document.querySelector(".decimal-button");
 
 const numbersDisplay = document.querySelector(".display .numbers");
 const previousEntryDisplay = document.querySelector(".display .previous-entry");
 
+// EVENT LISTENERS
 allClearButton.addEventListener("click", () => {
   entrys.first = "";
   entrys.second = "";
   entrys.operator = "";
   numbersDisplay.textContent = "";
   previousEntryDisplay.textContent = "";
+});
+
+clearEntryButton.addEventListener("click", () => {
+  if (!entrys.operator) {
+    entrys.first = "";
+  } else {
+    entrys.second = "";
+  }
+  numbersDisplay.textContent = "";
+});
+
+decimalButton.addEventListener("click", () => {
+  if (!entrys.operator && !entrys.first.includes(".")) {
+    entrys.first += ".";
+    numbersDisplay.textContent += ".";
+  } else if (entrys.operator && !entrys.second.includes(".")) {
+    entrys.second += ".";
+    numbersDisplay.textContent += ".";
+  }
 });
 
 operatorButtons.forEach((element) => {
@@ -22,6 +44,7 @@ numButtons.forEach((element) => {
   element.addEventListener("click", insertNum);
 });
 
+// FUNCTIONS AND VARIABLES
 const entrys = {
   first: "",
   operator: "",
