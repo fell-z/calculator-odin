@@ -1,2 +1,3 @@
-# calculator-odin
-Calculator app from "The Odin Project"
+# Calculator Project
+
+Calculator project from [The Odin Project](theodinproject.com).
