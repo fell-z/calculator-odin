@@ -90,7 +90,7 @@ function insertDecimal() {
 }
 
 function insertOperator(event) {
-  if (!entrys.operator) {
+  if (!entrys.operator && entrys.first) {
     entrys.operator = event.target.dataset.operator;
     numbersDisplay.textContent = "";
     switch (entrys.operator) {
