@@ -4,6 +4,7 @@ const operatorButtons = document.querySelectorAll(".operator-button");
 const allClearButton = document.querySelector(".all-clear-button");
 const clearEntryButton = document.querySelector(".clear-entry-button");
 const decimalButton = document.querySelector(".decimal-button");
+const minusPlusButton = document.querySelector(".minus-plus-button");
 
 const numbersDisplay = document.querySelector(".display .numbers");
 const previousEntryDisplay = document.querySelector(".display .previous-entry");
@@ -36,6 +37,8 @@ decimalButton.addEventListener("click", () => {
   }
 });
 
+minusPlusButton.addEventListener("click", switchSign);
+
 operatorButtons.forEach((element) => {
   element.addEventListener("click", insertOperator);
 });
@@ -45,6 +48,26 @@ numButtons.forEach((element) => {
 });
 
 // FUNCTIONS AND VARIABLES
+function switchSign() {
+  if (!entrys.operator) {
+    if (entrys.first.includes("-")) {
+      entrys.first = entrys.first.slice(1);
+      numbersDisplay.textContent = numbersDisplay.textContent.slice(1);
+    } else {
+      entrys.first = `-${entrys.first}`;
+      numbersDisplay.textContent = `-${numbersDisplay.textContent}`;
+    }
+  } else {
+    if (entrys.second.includes("-")) {
+      entrys.second = entrys.second.slice(1);
+      numbersDisplay.textContent = numbersDisplay.textContent.slice(1);
+    } else {
+      entrys.second = `-${entrys.second}`;
+      numbersDisplay.textContent = `-${numbersDisplay.textContent}`;
+    }
+  }
+}
+
 const entrys = {
   first: "",
   operator: "",
