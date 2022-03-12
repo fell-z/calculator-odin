@@ -31,7 +31,7 @@ body {
 
 main {
   height: 572px;
-  width: 440px;
+  width: 480px;
   display: grid;
   /* still figuring how to make this in a better way */
   grid-template-areas:
@@ -50,16 +50,16 @@ main {
   background-color: var(--calc-bg-color);
 }
 
-.numbers-display {
+.display {
   grid-area: display;
   height: 120px;
   background-color: var(--display-bg-color);
   color: var(--display-fg-color);
   font-size: 56px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-rows: 1fr 2fr;
+  justify-content: end;
+  align-content: end;
   padding: 6px 8px;
   user-select: none;
   border: 4px ridge var(--calc-bg-color);
@@ -70,6 +70,11 @@ main {
   font-size: 24px;
   color: hsl(123, 100%, 39%);
   user-select: none;
+  margin-left: auto;
+}
+
+.numbers {
+  margin-left: auto;
 }
 
 button {
@@ -96,7 +101,8 @@ button:active {
   color: white;
 }
 
-.num-button {
+.num-button,
+.decimal-button {
   background-color: hsl(123, 100%, 44%);
   color: white;
 }
