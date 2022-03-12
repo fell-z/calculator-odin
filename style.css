@@ -96,7 +96,8 @@ button:active {
   color: white;
 }
 
-.operator-button {
+.operator-button,
+.equal-button {
   background-color: var(--operator-button-color);
   color: white;
 }
