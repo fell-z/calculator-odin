@@ -1,3 +1,3 @@
 # Calculator Project
 
-Calculator project from [The Odin Project](theodinproject.com).
+Calculator project from [The Odin Project](https://theodinproject.com).
