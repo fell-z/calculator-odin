@@ -62,7 +62,6 @@ function switchSign() {
   if (entrys.result) {
     entrys.first = entrys.result;
     entrys.second = "";
-    entrys.result = "";
     entrys.operator = "";
   }
 
