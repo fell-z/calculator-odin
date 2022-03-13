@@ -94,6 +94,8 @@ const entrys = {
 };
 
 function insertDecimal() {
+  if (entrys.result) return;
+
   if (checkOperatorExistance() && entrys.first && !entrys.first.includes(".")) {
     entrys.first += ".";
     numbersDisplay.textContent += ".";
