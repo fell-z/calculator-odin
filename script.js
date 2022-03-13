@@ -20,9 +20,11 @@ decimalButton.addEventListener("click", insertDecimal);
 minusPlusButton.addEventListener("click", switchSign);
 
 equalButton.addEventListener("click", () => {
-  evaluateEquation();
-  numbersDisplay.textContent = `${entrys.result}`;
-  previousEntryDisplay.textContent = "";
+  if (!checkOperatorExistance()) {
+    evaluateEquation();
+    numbersDisplay.textContent = `${entrys.result}`;
+    previousEntryDisplay.textContent = "";
+  }
 });
 
 operatorButtons.forEach((element) => {
@@ -57,6 +59,13 @@ function clearEntry() {
 }
 
 function switchSign() {
+  if (entrys.result) {
+    entrys.first = entrys.result;
+    entrys.second = "";
+    entrys.result = "";
+    entrys.operator = "";
+  }
+
   if (checkOperatorExistance()) {
     if (entrys.first.includes("-")) {
       entrys.first = entrys.first.slice(1);
@@ -135,15 +144,14 @@ function insertNum(event) {
 }
 
 function evaluateEquation() {
-  if (checkOperatorExistance()) return;
-  entrys.result = operate(entrys.first, entrys.second, entrys.operator);
+  entrys.result = String(operate(entrys.first, entrys.second, entrys.operator));
   // just to make things shorter, this calc has limits
-  if (String(entrys.result).length > 10 && String(entrys.result).includes(".")) {
+  if (entrys.result.length > 10 && entrys.result.includes(".")) {
     // if result has more than 8 zeros, just reduce the decimal places to 1.
-    if (Array.from(String(entrys.result)).filter((num) => num === "0").length > 8) {
-      entrys.result = entrys.result.toFixed(1);
+    if (Array.from(entrys.result).filter((num) => num === "0").length > 8) {
+      entrys.result = Number(entrys.result).toFixed(1);
     } else {
-      entrys.result = entrys.result.toFixed(4);
+      entrys.result = Number(entrys.result).toFixed(3);
     }
   }
 }
