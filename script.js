@@ -50,6 +50,8 @@ function clearAllEntry() {
 }
 
 function clearEntry() {
+  if (entrys.result && entrys.first && entrys.second) clearAllEntry();
+
   if (checkOperatorExistance()) {
     entrys.first = "";
   } else {
@@ -131,7 +133,15 @@ function insertOperator(event) {
 }
 
 function insertNum(event) {
-  if (entrys.result) clearAllEntry();
+  /* because of switchSign(), i have to make a condition like this, but
+  this is nasty code, hope to find a solution for both of problems,
+  switching sign of result and clearing if user tries to change the result
+  by adding a num for example */
+  if (entrys.result && !entrys.second && entrys.operator) {
+    entrys.result = "";
+  } else if (entrys.result) {
+    clearAllEntry();
+  }
 
   if (numbersDisplay.textContent.length >= 12) return;
   numbersDisplay.textContent += event.target.dataset.number;
