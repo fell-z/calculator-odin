@@ -1,9 +1,3 @@
-/*
-TODO:
-if a operator button is pressed after 1st entry, 2st entry and a operator has already been entered,
-evaluate the expression and insert the new operator after result and so on.
-*/
-
 // REFERENCE ELEMENTS
 const numButtons = document.querySelectorAll(".num-button");
 const operatorButtons = document.querySelectorAll(".operator-button");
@@ -27,6 +21,8 @@ minusPlusButton.addEventListener("click", switchSign);
 
 equalButton.addEventListener("click", () => {
   evaluateEquation();
+  numbersDisplay.textContent = `${entrys.result}`;
+  previousEntryDisplay.textContent = "";
 });
 
 operatorButtons.forEach((element) => {
@@ -88,17 +84,17 @@ const entrys = {
 };
 
 function insertDecimal() {
-  if (checkOperatorExistance() && !entrys.first.includes(".")) {
+  if (checkOperatorExistance() && entrys.first && !entrys.first.includes(".")) {
     entrys.first += ".";
     numbersDisplay.textContent += ".";
-  } else if (!checkOperatorExistance() && !entrys.second.includes(".")) {
+  } else if (!checkOperatorExistance() && entrys.second && !entrys.second.includes(".")) {
     entrys.second += ".";
     numbersDisplay.textContent += ".";
   }
 }
 
 function insertOperator(event) {
-  if (checkOperatorExistance() && entrys.first) {
+  const getOperator = function () {
     entrys.operator = event.target.dataset.operator;
     numbersDisplay.textContent = "";
     switch (entrys.operator) {
@@ -111,6 +107,18 @@ function insertOperator(event) {
       default:
         previousEntryDisplay.innerHTML = `${entrys.first} ${entrys.operator}`;
     }
+  };
+
+  if (entrys.first && entrys.second && entrys.operator) {
+    evaluateEquation();
+    entrys.first = entrys.result;
+    entrys.second = "";
+    entrys.result = "";
+    getOperator();
+  }
+
+  if (checkOperatorExistance() && entrys.first) {
+    getOperator();
   }
 }
 
@@ -129,8 +137,15 @@ function insertNum(event) {
 function evaluateEquation() {
   if (checkOperatorExistance()) return;
   entrys.result = operate(entrys.first, entrys.second, entrys.operator);
-  numbersDisplay.textContent = `${entrys.result}`;
-  previousEntryDisplay.textContent = "";
+  // just to make things shorter, this calc has limits
+  if (String(entrys.result).length > 10 && String(entrys.result).includes(".")) {
+    // if result has more than 8 zeros, just reduce the decimal places to 1.
+    if (Array.from(String(entrys.result)).filter((num) => num === "0").length > 8) {
+      entrys.result = entrys.result.toFixed(1);
+    } else {
+      entrys.result = entrys.result.toFixed(4);
+    }
+  }
 }
 
 function operate(x, y, operator) {
